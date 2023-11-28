@@ -1,14 +1,12 @@
+import React from 'react';
 import './App.css';
-import page from './components/page.js';
-
+import LoginForm from './components/page.js';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <p>
-          <page />
-        </p>
+        <LoginForm /> {/* Use the component here */}
       </header>
     </div>
   );
