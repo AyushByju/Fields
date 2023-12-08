@@ -42,7 +42,6 @@ function LoginForm() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Handle form submission logic here
     console.log(formData);
   };
 
