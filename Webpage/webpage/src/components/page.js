@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './page.css';
 import companiesData from './companies.json';
+import countriesData from './countries.json';
 
 function LoginForm() {
   const [companyInput, setCompanyInput] = useState('');
@@ -11,11 +12,14 @@ function LoginForm() {
     lastName: '',
     title: '',
     topicsOfInterest: '',
+    country: '',
     province: '',
     city: '',
-    country: '',
     postalCode: ''
   });
+  const [selectedCountry, setSelectedCountry] = useState('');
+  const [filteredProvinces, setFilteredProvinces] = useState([]);
+
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -24,6 +28,20 @@ function LoginForm() {
       [name]: value
     }));
   };
+  const handleCountryChange = (event) => {
+    const country = event.target.value;
+    setSelectedCountry(country);
+    const countryData = countriesData.find(c => c.country === country);
+    setFilteredProvinces(countryData ? countryData.provinces : []);
+    setFormData(prevState => ({
+      ...prevState,
+      country: country,
+      province: '', // Reset province when country changes
+      city: '' // You might also want to reset the city field
+    }));
+  };
+  
+  
 
   const handleCompanyInputChange = (event) => {
     const input = event.target.value;
@@ -81,16 +99,23 @@ function LoginForm() {
                   ))}
               </ul>
           )}
-
+            <label htmlFor="country">Country</label>
+            <select id="country" name="country" value={formData.country} onChange={handleCountryChange}>
+            <option value="">Select a Country</option>
+            {countriesData.map((c, index) => (
+              <option key={index} value={c.country}>{c.country}</option>
+            ))}
+          </select>
           <label htmlFor="province">Province</label>
-          <input type="text" id="province" name="province" value={formData.province} onChange={handleInputChange} />
+          <select id="province" name="province" value={formData.province} onChange={handleInputChange}>
+            <option value="">Select a Province</option>
+            {filteredProvinces.map((province, index) => (
+              <option key={index} value={province}>{province}</option>
+            ))}
+          </select>
 
           <label htmlFor="city">City</label>
           <input type="text" id="city" name="city" value={formData.city} onChange={handleInputChange} />
-
-          <label htmlFor="country">Country</label>
-          <input type="text" id="country" name="country" value={formData.country} onChange={handleInputChange} />
-
           <label htmlFor="postal-code">Postal Code</label>
           <input type="text" id="postal-code" name="postalCode" value={formData.postalCode} onChange={handleInputChange} />
 
