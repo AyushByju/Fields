@@ -61,6 +61,25 @@ function LoginForm() {
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(formData);
+  
+    alert('Thank you for registering!');
+  
+    setFormData({
+      email: '',
+      firstName: '',
+      lastName: '',
+      title: '',
+      topicsOfInterest: '',
+      country: '',
+      province: '',
+      city: '',
+      postalCode: ''
+    });
+  
+    setCompanyInput('');
+    setFilteredCompanies([]);
+    setSelectedCountry('');
+    setFilteredProvinces([]);
   };
 
   return (
